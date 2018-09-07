@@ -62,23 +62,23 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
       " FROM TEST_TITLE"
       " WHERE 1=1"
    );
-   if (req->data->criteria != NULL && SASF_SIZE(req->data->criteria) == 1)
+   if (req->data[0]->criteria != NULL && SASF_SIZE(req->data[0]->criteria) == 1)
    {
-      if (req->data->criteria->code != NULL 
-          && SASF_SIZE(req->data->criteria->code) == 1 
-          && req->data->criteria->code[0] != NULL
-          && strlen(req->data->criteria->code[0]) > 0)
+      if (req->data[0]->criteria->code != NULL 
+          && SASF_SIZE(req->data[0]->criteria[0]->code) == 1 
+          && req->data[0]->criteria->code[0] != NULL
+          && strlen(req->data[0]->criteria->code[0]) > 0)
       {
          FAS_STRCATF(sql," AND TITLE_CODE = :TITLE_CODE");
-         FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data->criteria->code[0])
+         FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data[0]->criteria->code[0])
       }
-      if (req->data->criteria->name != NULL 
-          && SASF_SIZE(req->data->criteria->name) == 1 
-          && req->data->criteria->name[0] != NULL
-          && strlen(req->data->criteria->name[0]) > 0)
+      if (req->data[0]->criteria->name != NULL 
+          && SASF_SIZE(req->data[0]->criteria->name) == 1 
+          && req->data[0]->criteria->name[0] != NULL
+          && strlen(req->data[0]->criteria->name[0]) > 0)
       {
          FAS_STRCATF(sql," AND TITLE_NAME = :TITLE_NAME");
-         FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data->criteria->name[0])
+         FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data[0]->criteria->name[0])
       }
    }
    FAS_STRCATF(sql," ORDER BY TITLE_CODE");
@@ -118,7 +118,7 @@ LOG_DEBUG(("SQL=[%s]",FAS_STRING(sql)))
 
    SASF_APPEND_STRING(res->errorCode,"0")
    SASF_APPEND_STRING(res->errorMessage,"")
-   if (countrys != NULL)
+   if (titles != NULL)
    {
      res->data->searchResult->list = titles;
    }
