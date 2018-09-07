@@ -65,7 +65,7 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
    if (req->data[0]->criteria != NULL && SASF_SIZE(req->data[0]->criteria) == 1)
    {
       if (req->data[0]->criteria->code != NULL 
-          && SASF_SIZE(req->data[0]->criteria[0]->code) == 1 
+          && SASF_SIZE(req->data[0]->criteria->code) == 1 
           && req->data[0]->criteria->code[0] != NULL
           && strlen(req->data[0]->criteria->code[0]) > 0)
       {
