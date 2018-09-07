@@ -48,12 +48,15 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
    struct Title **titles = NULL;
 
    SASF_NEW(res->data)
-   SASF_NEW(res->data->searchResult)
+LOG_DEBUG(("check 1"))
+  SASF_NEW(res->data->searchResult)
+LOG_DEBUG(("check 2"))
    SASF_NEW(res->data->searchResult->list)
-
+LOG_DEBUG(("check 3"))
    FAS_ALLOC_VAR(var)
+LOG_DEBUG(("check 4"))
    FAS_ALLOC_STRING(sql)
-
+LOG_DEBUG(("check 5"))
    FAS_CLEAR_VAR(var)
    FAS_CLEAR_STRING(sql)
 
@@ -62,27 +65,30 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
       " FROM TEST_TITLE"
       " WHERE 1=1"
    );
+LOG_DEBUG(("check 6"))
    if (req->data[0]->criteria != NULL && SASF_SIZE(req->data[0]->criteria) == 1)
    {
       if (req->data[0]->criteria->code != NULL 
           && SASF_SIZE(req->data[0]->criteria->code) == 1 
           && req->data[0]->criteria->code[0] != NULL
           && strlen(req->data[0]->criteria->code[0]) > 0)
-      {
+      {LOG_DEBUG(("check 7"))
          FAS_STRCATF(sql," AND TITLE_CODE = :TITLE_CODE");
          FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data[0]->criteria->code[0])
+         LOG_DEBUG(("check 8"))
       }
       if (req->data[0]->criteria->name != NULL 
           && SASF_SIZE(req->data[0]->criteria->name) == 1 
           && req->data[0]->criteria->name[0] != NULL
           && strlen(req->data[0]->criteria->name[0]) > 0)
-      {
+      {LOG_DEBUG(("check 9"))
          FAS_STRCATF(sql," AND TITLE_NAME = :TITLE_NAME");
          FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data[0]->criteria->name[0])
+         LOG_DEBUG(("check 10"))
       }
    }
    FAS_STRCATF(sql," ORDER BY TITLE_CODE");
-
+LOG_DEBUG(("check 11"))
 LOG_DEBUG(("SQL=[%s]",FAS_STRING(sql)))
    FAS_OPEN_CURSOR(curs,FAS_STRING(sql),var)
    for (;;)
