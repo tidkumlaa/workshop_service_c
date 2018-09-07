@@ -56,7 +56,33 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
 
    FAS_CLEAR_VAR(var)
    FAS_CLEAR_STRING(sql)
-   FAS_STRCATF(sql,"SELECT TITLE_ID, TITLE_CODE, TITLE_NAME, UPDATE_USER, UPDATE_DTM FROM TEST_TITLE");
+
+   FAS_STRCATF(sql,
+      " SELECT TITLE_ID, TITLE_CODE, TITLE_NAME, UPDATE_USER, UPDATE_DTM"
+      " FROM TEST_TITLE"
+      " WHERE 1=1"
+   );
+   if (req->data->searchCriteria != NULL && SASF_SIZE(req->data->searchCriteria) == 1)
+   {
+      if (req->data->searchCriteria[0]->code != NULL 
+          && SASF_SIZE(req->data->searchCriteria[0]->code) == 1 
+          && req->data->searchCriteria[0]->code[0] != NULL
+          && strlen(req->data->searchCriteria[0]->code[0]) > 0)
+      {
+         FAS_STRCATF(sql," AND TITLE_CODE = :TITLE_CODE");
+         FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data->searchCriteria[0]->code[0])
+      }
+      if (req->data->searchCriteria[0]->name != NULL 
+          && SASF_SIZE(req->data->searchCriteria[0]->name) == 1 
+          && req->data->searchCriteria[0]->name[0] != NULL
+          && strlen(req->data->searchCriteria[0]->name[0]) > 0)
+      {
+         FAS_STRCATF(sql," AND TITLE_NAME = :TITLE_NAME");
+         FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data->searchCriteria[0]->name[0])
+      }
+   }
+   FAS_STRCATF(sql," ORDER BY TITLE_CODE");
+
 LOG_DEBUG(("SQL=[%s]",FAS_STRING(sql)))
    FAS_OPEN_CURSOR(curs,FAS_STRING(sql),var)
    for (;;)
