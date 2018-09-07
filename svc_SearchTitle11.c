@@ -49,7 +49,7 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
 
    SASF_NEW(res->data)
    SASF_NEW(res->data->searchResult)
-   SASF_NEW(res->data->searchResult->records)
+   SASF_NEW(res->data->searchResult->list)
 
    FAS_ALLOC_VAR(var)
    FAS_ALLOC_STRING(sql)
@@ -120,10 +120,10 @@ LOG_DEBUG(("SQL=[%s]",FAS_STRING(sql)))
    SASF_APPEND_STRING(res->errorMessage,"")
    if (countrys != NULL)
    {
-     res->data->searchResult->records = titles;
+     res->data->searchResult->list = titles;
    }
 
-LOG_DEBUG(("SIZE=%d",SASF_SIZE(res->data->searchResult->records)))
+LOG_DEBUG(("SIZE=%d",SASF_SIZE(res->data->searchResult->list)))
 
 /* ** END SERVICE CODE ** */
 /************************************************************************************/
