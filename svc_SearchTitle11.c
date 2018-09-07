@@ -62,23 +62,23 @@ SearchTitle11 (SASD *sasd_csv, SASD * _SASF_SASD_IN, SASD * _SASF_SASD_OUT)
       " FROM TEST_TITLE"
       " WHERE 1=1"
    );
-   if (req->data->searchCriteria != NULL && SASF_SIZE(req->data->searchCriteria) == 1)
+   if (req->data->criteria != NULL && SASF_SIZE(req->data->criteria) == 1)
    {
-      if (req->data->searchCriteria[0]->code != NULL 
-          && SASF_SIZE(req->data->searchCriteria[0]->code) == 1 
-          && req->data->searchCriteria[0]->code[0] != NULL
-          && strlen(req->data->searchCriteria[0]->code[0]) > 0)
+      if (req->data->criteria[0]->code != NULL 
+          && SASF_SIZE(req->data->criteria[0]->code) == 1 
+          && req->data->criteria[0]->code[0] != NULL
+          && strlen(req->data->criteria[0]->code[0]) > 0)
       {
          FAS_STRCATF(sql," AND TITLE_CODE = :TITLE_CODE");
-         FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data->searchCriteria[0]->code[0])
+         FAS_SET_VAR_BY_NAME(var,":TITLE_CODE", req->data->criteria[0]->code[0])
       }
-      if (req->data->searchCriteria[0]->name != NULL 
-          && SASF_SIZE(req->data->searchCriteria[0]->name) == 1 
-          && req->data->searchCriteria[0]->name[0] != NULL
-          && strlen(req->data->searchCriteria[0]->name[0]) > 0)
+      if (req->data->criteria[0]->name != NULL 
+          && SASF_SIZE(req->data->criteria[0]->name) == 1 
+          && req->data->criteria[0]->name[0] != NULL
+          && strlen(req->data->criteria[0]->name[0]) > 0)
       {
          FAS_STRCATF(sql," AND TITLE_NAME = :TITLE_NAME");
-         FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data->searchCriteria[0]->name[0])
+         FAS_SET_VAR_BY_NAME(var,":TITLE_NAME", req->data->criteria[0]->name[0])
       }
    }
    FAS_STRCATF(sql," ORDER BY TITLE_CODE");
